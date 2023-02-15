@@ -19,7 +19,7 @@ args = parser.parse_args()
 # Strikes down phantom arguments
 if not args.compile and args.test:
 	print("You can't use the --test argument without the --compile argument, please see -h or --help")
-	quit()
+	sys.exit()
 
 # Project initation
 if args.init:
@@ -34,7 +34,7 @@ if args.init:
 			print(
 				"A folder called '{}' already exists. That could mean that another project is already here.".format(item)
 			)
-			quit()
+			sys.exit()
 
 	# Creates the presets
 	with open("src/app.pyml", "w") as f:
@@ -86,7 +86,7 @@ body
 
 	print ("A new project was generated.")
 	# Terminates the initiation
-	quit()
+	sys.exit()
 
 
 # Project compilation
@@ -206,6 +206,6 @@ if args.compile:
 						env=os.environ)
 					print(result.stdout.decode())
 					print(result.stderr.decode(), file=sys.stderr)
-	quit()
+	sys.exit()
 
 print("No argument submitted, please see -h or --help")
