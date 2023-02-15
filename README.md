@@ -1,3 +1,5 @@
+**Disclaimer: this is still in beta, if not in alpha**
+
 # RapydFramework, the easy for client development
 RapydFramework is an easy way to develop web apps using your Python skills. At his core, however, it's just a
 way to generate and compile projects that use RapydML, RapydScript and Sass (all technologies that have a heavily 
@@ -12,7 +14,7 @@ RapydFramework needs for these dependencies to be installed manually:
 
 
 RapydFramework for now is only for Windows. I have to confess that I don't have high incentives to make a Linux
-(or worse, a Mac version), so forking is encouraged. To install the package, just paste this command in the command
+version (or worse, a Mac) , so forking is encouraged. To install the package, just paste this command in the command
 prompt:
 
     python -c "import os; os.system('curl -sSL https://raw.githubusercontent.com/savethekiddes/rapydframework/main/setup.py | python -')"
