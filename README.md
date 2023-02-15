@@ -14,8 +14,8 @@ RapydFramework needs for these dependencies to be installed manually:
 
 
 RapydFramework for now is only for Windows. I have to confess that I don't have high incentives to make a Linux
-version (or worse, a Mac) , so forking is encouraged. To install the package, just paste this command in the command
-prompt:
+version (or worse, a Mac), so forking is encouraged. To install or update the package, just paste this command
+in the command prompt:
 
     python -c "import os; os.system('curl -sSL https://raw.githubusercontent.com/savethekiddes/rapydframework/main/setup.py | python -')"
 
@@ -37,3 +37,19 @@ If you do this, to call RapydScript you'll use:
 Instead of:
 
     C:/rapydframework/rapydframework.exe
+
+# Usage
+To get started, you can just type the following command:
+
+    C:/rapydframework/rapydframework.exe -h
+
+The output will be the following:
+
+    RapydFramework, the easy way for client development
+    usage: rapydframework [-h] [-i | -c] [-t]
+
+    options:
+      -h, --help     show this help message and exit
+      -i, --init     creates a new project
+      -c, --compile  compiles a project
+      -t, --test     tests the code for errors, to be used with the --compile argument
