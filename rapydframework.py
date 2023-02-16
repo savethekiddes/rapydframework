@@ -149,7 +149,7 @@ if args.compile:
 					contents = f.read()
 				contents = re.sub(r'(["\']).*\.pyj.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".pyj", ".js") + m.group(2), contents)
 				contents = re.sub(r'(["\']).*\.sass.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".sass", ".css") + m.group(2), contents)
-				contents = contents.replace("@component@(", 'iframe(style="width:100%; height:auto; border: none; margin: 0; padding: 0;", ')
+				contents = contents.replace("@component@(", 'iframe(class="resize-me", style="width:100%; height:auto; border: none; margin: 0; padding: 0;", ')
 				contents = re.sub(r'(["\']).*\.pyml.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".pyml", ".html") + m.group(2), contents)
 				with open(pymlpath, "w") as f:
 					f.write(contents)
@@ -185,9 +185,27 @@ if args.compile:
 				subprocess.Popen(["sass.exe", sasspath, csspath], env=os.environ)
 				print("{} compiled to CSS".format(sasspath))
 
+	# Copies the html files to the build folder
 	for root, dirs, files in os.walk("temp/"):
 		for file in files:
 			if file.endswith(".html"):
+				with open(file, "a") as f:
+					f.write("""
+<script>
+  function resizeIframes() {
+    const iframes = document.querySelectorAll('.resize-me');
+    iframes.forEach(iframe => {
+      const contentWidth = iframe.contentWindow.document.body.scrollWidth;
+      const contentHeight = iframe.contentWindow.document.body.scrollHeight;
+      iframe.style.width = contentWidth + 'px';
+      iframe.style.height = contentHeight + 'px';
+    });
+  }
+
+  // Call the resizeIframes function when all iframes have finished loading
+  window.addEventListener('load', resizeIframes);
+</script>
+							""")
 				htmlpath = os.path.join(root, file).replace("\\", "/")
 				buildpath = htmlpath.replace("temp/", "build/")
 				shutil.copy2(htmlpath, buildpath)
