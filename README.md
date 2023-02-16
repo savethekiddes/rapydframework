@@ -59,6 +59,6 @@ The output will be the following:
 The credits of course go to:
 - [https://github.com/atsepkov/](atsepkov), for making the original RapydML and RapydScript
 - [https://github.com/kovidgoyal/](kovidgoyal), for forking RapydScript and make it live again
-- [https://github.com/sass](The SASS's developers), for making easier writing CSS
+- [https://github.com/sass/](The SASS's developers), for making easier writing CSS
 
 Awesome work, thanks to all of you!
