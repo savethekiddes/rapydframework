@@ -94,7 +94,7 @@ body
 .env
 .env.*
 !.env.example""")
-	with open("README.md") as m:
+	with open("README.md", "w") as m:
 		m.write("""# RapydFramework
 
 Develop easily frontends without needing to learn other syntax but the Python one-
