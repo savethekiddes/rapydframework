@@ -211,7 +211,6 @@ if args.compile:
 							lol.write("{}".format(twconfig))
 							lol.write("\n")
 							lol.write("</script>")
-							lol.write()
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
 
