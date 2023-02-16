@@ -23,8 +23,8 @@ in the command prompt:
 
 # About PATH
 Some installers of Node.js don't add the "npm" folder to PATH. This is a problem, because then RapydScript-ng (the
-Python-like implementation of JavaScript) will not work. If rapydscript.py return FileNotFoundError when trying
-to fetch JavaScript, then run this command in a command prompt as administrator:
+Python-like implementation of JavaScript) will not work. If rapydscript.py returns a FileNotFoundError when trying
+to compile RapydScript, then run this command in a command prompt as administrator:
 
     setx PATH "%PATH%;%APPDATA%/npm"
 
