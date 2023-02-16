@@ -88,6 +88,36 @@ body
 	"rules": {
 	}
 }""")
+	with open(".gitignore", "w") as f:
+		f.write("""/build
+/temp
+.env
+.env.*
+!.env.example""")
+	with open("README.md") as m:
+		m.write("""# RapydFramework
+
+Develop easily frontends without needing to learn other syntax but the Python one-
+
+## Create a project
+
+If you're seeing this, you probably already made this step. Congratulations.
+
+    C:/rapydframework/rapydframework.exe -i
+
+You might also consider to use Tailwind:
+
+    C:/rapydframework/rapydframework.exe -i --tailwind
+
+## Compile a project
+
+To compile a project to HTML, CSS, JavaScript and, eventualy, WASM, run the following command:
+
+    C:/rapydframework/rapydframework.exe -c
+
+To test the generated Javascript, you can do that with eslint:
+
+    C:/rapydframework/rapydframework.exe -c""")
 
 	if args.tailwind:
 		with open("tailwind.config.js", "w") as t:
