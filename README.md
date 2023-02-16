@@ -18,7 +18,7 @@ RapydFramework for now is only for Windows. I have to confess that I don't have 
 version (or worse, a Mac), so forking is encouraged. To install or update the package, just paste this command
 in the command prompt:
 
-    python -c "import os; os.system('curl -sSL https://raw.githubusercontent.com/savethekiddes/rapydframework/main/setup.py | python -')"
+    powershell -command "Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/savethekiddes/rapydframework/main/setup.py -OutFile setup.py; python setup.py"
 
 # About PATH
 Some installers of Node.js don't add the "npm" folder to PATH. This is a problem, because then RapydScript-ng (the
