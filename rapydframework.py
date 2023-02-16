@@ -208,7 +208,7 @@ if args.compile:
 							lol.write('<script>\n')
 							with open("tailwind.config.js", "r") as x:
 								twconfig = x.read
-							lol.write(twconfig)
+							lol.write("{}".format(twconfig))
 							lol.write("\n")
 							lol.write("</script>")
 							lol.write()
