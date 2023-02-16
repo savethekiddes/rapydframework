@@ -15,7 +15,7 @@ RapydFramework needs for these dependencies to be installed manually:
 
 
 RapydFramework for now is only for Windows. I have to confess that I don't have high incentives to make a Linux
-version (or worse, a Mac), so forking is encouraged. To install or update the package, just paste this command
+version (or worse, a Mac one), so forking is encouraged. To install or update the package, just paste this command
 in the command prompt:
 
     powershell -command "Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/savethekiddes/rapydframework/main/setup.py -OutFile setup.py; python setup.py"
