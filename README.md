@@ -11,24 +11,22 @@ RapydFramework needs for these dependencies to be installed manually:
 - [Python](https://www.python.org/) (with pip)
 - [NodeJS](https://nodejs.org/)
 - [Sass](https://sass-lang.com/)
-- [GIT](https://git-scm.com/)
 
 
 RapydFramework for now is only for Windows. I have to confess that I don't have high incentives to make a Linux
-version (or worse, a Mac one), so forking is encouraged. To install or update the package, just paste this command
+version (or worse, a Mac), so forking is encouraged. To install or update the package, just paste this command
 in the command prompt:
 
-    powershell -command "Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/savethekiddes/rapydframework/main/setup.py -OutFile setup.py; python setup.py"
-
+    python -c "import os; os.system('curl -sSL https://raw.githubusercontent.com/savethekiddes/rapydframework/main/setup.py | python -')"
 
 # About PATH
 Some installers of Node.js don't add the "npm" folder to PATH. This is a problem, because then RapydScript-ng (the
 Python-like implementation of JavaScript) will not work. If rapydscript.py returns a FileNotFoundError when trying
-to compile RapydScript, then run this command in a command prompt as administrator:
+to compile RapydScript, then run this in a command prompt as administrator::
 
     setx PATH "%PATH%;%APPDATA%/npm"
 
-You might also to consider to add RapydFramework to PATH to avoid boilerplate code:
+You might also to consider to add RapydFramework to PATH to avoid always writing the absolute PATH:
 
     setx PATH "%PATH%;C:/rapydframework"
 
