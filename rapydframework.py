@@ -13,12 +13,17 @@ parser = argparse.ArgumentParser()
 action = parser.add_mutually_exclusive_group()
 action.add_argument("-i", "--init", action="store_true", help="creates a new project")
 action.add_argument("-c", "--compile", action="store_true", help="compiles a project")
+parser.add_argument("--tailwind", action="store_true", help="adds Tailwind support, to be used with the --init argument")
 parser.add_argument("-t", "--test", action="store_true", help="tests the code for errors, to be used with the --compile argument")
 args = parser.parse_args()
 
 # Strikes down phantom arguments
 if not args.compile and args.test:
 	print("You can't use the --test argument without the --compile argument, please see -h or --help")
+	sys.exit()
+
+if not args.init and args.tailwind:
+	print("You can't use the --tailwind argument without the --init argument, please see -h or --help")
 	sys.exit()
 
 # Project initation
@@ -84,6 +89,13 @@ body
 	}
 }""")
 
+	if args.tailwind:
+		with open("tailwind.config.js", "w") as t:
+			t.write("""
+    tailwind.config = {
+
+    }
+           """)
 	print ("A new project was generated.")
 	# Terminates the initiation
 	sys.exit()
@@ -190,6 +202,15 @@ if args.compile:
 		for file in files:
 				if file.endswith(".html"):
 					htmlpath = os.path.join(root, file).replace("\\", "/")
+					if os.path.exists("tailwind.config.js"):
+						with open(htmlpath, "a") as lol:
+							lol.write('<script src="https://cdn.tailwindcss.com"></script>\n')
+							lol.write('<script>\n')
+							with open("tailwind.config.js", "r") as x:
+								twconfig = x.read
+							lol.write(twconfig, "\n")
+							lol.write("</script>")
+							lol.write()
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
 
