@@ -189,7 +189,7 @@ if args.compile:
 	for root, dirs, files in os.walk("temp/"):
 		for file in files:
 				if file.endswith(".html"):
-					htmlpath = os.path.join(root, file).replace("\\", "/z")
+					htmlpath = os.path.join(root, file).replace("\\", "/")
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
 
@@ -208,8 +208,7 @@ if args.compile:
      
     # Deletes the temporary files
 	shutil.rmtree("temp/")
-
-	# Exits	
+ 
 	sys.exit()
 
 print("No argument submitted, please see -h or --help")
