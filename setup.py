@@ -9,7 +9,7 @@ if not os.path.exists("C:/"):
     quit()
 
 # Install required Python modules
-required_modules = ["requests", "regex"]
+required_modules = ["requests", "regex", "PyInstaller"]
 for item in required_modules:
     try:
         importlib.import_module(item)
@@ -51,15 +51,34 @@ print("eslint installed/updated.")
 if not os.path.exists("C:/rapydframework"):
 	os.makedirs("C:/rapydframework")
 else:
-	shutil.rmtree("C:/rapydframework")
-	os.makedirs("C:/rapydframework")
+    for root, dirs, files in os.walk("C:/rapydframework"):
+        for dir in dirs:
+            os.chmod(os.path.join(root, dir), 0o777)
+        for file in files:
+            os.chmod(os.path.join(root, file), 0o777) 
+    shutil.rmtree("C:/rapydframework")
+    os.makedirs("C:/rapydframework")
 
 os.makedirs("C:/rapydframework/rapydml")
-os.makedirs("C:/rapydframework/rapydframework")
+os.makedirs("C:/rapydframework/src")
 
 # Installs RapydFramework and RapydMl
 subprocess.run(["git", "clone", "https://github.com/savethekiddes/RapydML-ng", "C:/rapydframework/rapydml"])
-subprocess.run(["git", "clone", "https://github.com/savethekiddes/rapydframework", "C:/rapydframework/rapydframework"])
+subprocess.run(["git", "clone", "https://github.com/savethekiddes/rapydframework", "C:/rapydframework/src"])
 
+# Package the RapydFramework into an executable
+import PyInstaller.__main__
+script_path = 'C:/rapydframework/src/rapydframework.py'
+options = [
+    '--onefile',  # Package the script as a single executable
+    '--console',  # Create a console application
+    '--name=RapydFramework',  # Set the name of the executable
+]
+PyInstaller.__main__.run([
+    *options,
+    f"""--distpath={'C:/rapydframework'}""",
+    script_path
+])
 
-
+# Announces succesfull installation
+print("RapydFramework was installed successfully")
