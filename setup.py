@@ -81,4 +81,4 @@ PyInstaller.__main__.run([
 ])
 
 # Announces succesfull installation
-print("RapydFramework was installed successfully")
+print("RapydFramework was installed/updated successfully")
