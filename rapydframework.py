@@ -149,11 +149,9 @@ if args.compile:
 					contents = f.read()
 				contents = re.sub(r'(["\']).*\.pyj.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".pyj", ".js") + m.group(2), contents)
 				contents = re.sub(r'(["\']).*\.sass.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".sass", ".css") + m.group(2), contents)
+				contents = contents.format("@component@(", 'iframe(style="style="width:100%; height:auto;", ')
+				contents = re.sub(r'(["\']).*\.pyml.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".pyml", ".html") + m.group(2), contents)
 				with open(pymlpath, "w") as f:
-					f.write("rapydscript = code_block(script(type='text/javascript'), \\\n")
-					f.write("    ' > %temp%/tempfile.pyj && rapydscript %temp%/tempfile.pyj -o %temp%/tempfile.js && type %temp%/tempfile.js')\n")
-					f.write("sass = code_block(style, \\\n")
-					f.write("    ' > %temp%/tempfile.sass && sass %temp%/tempfile.sass -o %temp%/tempfile.css && type %temp%/tempfile.css')\n")
 					f.write(contents)
      
 	# Compiles Python Markdown to HTML
