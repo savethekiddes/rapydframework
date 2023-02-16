@@ -11,6 +11,7 @@ RapydFramework needs for these dependencies to be installed manually:
 - [Python](https://www.python.org/) (with pip)
 - [NodeJS](https://nodejs.org/)
 - [Sass](https://sass-lang.com/)
+- [GIT](https://git-scm.com/)
 
 
 RapydFramework for now is only for Windows. I have to confess that I don't have high incentives to make a Linux
