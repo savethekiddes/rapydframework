@@ -1,6 +1,6 @@
 **Disclaimer: this is still in beta, if not in alpha**
 
-# RapydFramework, the easy for client development
+# RapydFramework, the easy way for client development
 RapydFramework is an easy way to develop web apps using your Python skills. At his core, however, it's just a
 way to generate and compile projects that use RapydML, RapydScript and Sass (all technologies that have a heavily 
 inspired or heavily similar syntax to Python). That allows you to make cross-platform clients by just learning an
