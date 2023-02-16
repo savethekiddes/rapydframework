@@ -189,24 +189,7 @@ if args.compile:
 	for root, dirs, files in os.walk("temp/"):
 		for file in files:
 				if file.endswith(".html"):
-					htmlpath = os.path.join(root, file).replace("\\", "/")
-					with open(htmlpath, "a") as f:
-						f.write("""
-<script>
-  function resizeIframes() {
-    const iframes = document.querySelectorAll('.resize-me');
-    iframes.forEach(iframe => {
-      const contentWidth = iframe.contentWindow.document.body.scrollWidth;
-      const contentHeight = iframe.contentWindow.document.body.scrollHeight;
-      iframe.style.width = contentWidth + 'px';
-      iframe.style.height = contentHeight + 'px';
-    });
-  }
-
-  // Call the resizeIframes function when all iframes have finished loading
-  window.addEventListener('load', resizeIframes);
-</script>
-							""")
+					htmlpath = os.path.join(root, file).replace("\\", "/z")
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
 
@@ -222,6 +205,11 @@ if args.compile:
 						env=os.environ)
 					print(result.stdout.decode())
 					print(result.stderr.decode(), file=sys.stderr)
+     
+    # Deletes the temporary files
+	shutil.rmtree("temp/")
+
+	# Exits	
 	sys.exit()
 
 print("No argument submitted, please see -h or --help")
