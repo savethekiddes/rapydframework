@@ -188,9 +188,10 @@ if args.compile:
 	# Copies the html files to the build folder
 	for root, dirs, files in os.walk("temp/"):
 		for file in files:
-			if file.endswith(".html"):
-				with open(file, "a") as f:
-					f.write("""
+				if file.endswith(".html"):
+					htmlpath = os.path.join(root, file).replace("\\", "/")
+					with open(htmlpath, "a") as f:
+						f.write("""
 <script>
   function resizeIframes() {
     const iframes = document.querySelectorAll('.resize-me');
@@ -206,9 +207,8 @@ if args.compile:
   window.addEventListener('load', resizeIframes);
 </script>
 							""")
-				htmlpath = os.path.join(root, file).replace("\\", "/")
-				buildpath = htmlpath.replace("temp/", "build/")
-				shutil.copy2(htmlpath, buildpath)
+					buildpath = htmlpath.replace("temp/", "build/")
+					shutil.copy2(htmlpath, buildpath)
 
     # Tests the built javascript
 	if args.test:
