@@ -149,7 +149,7 @@ if args.compile:
 					contents = f.read()
 				contents = re.sub(r'(["\']).*\.pyj.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".pyj", ".js") + m.group(2), contents)
 				contents = re.sub(r'(["\']).*\.sass.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".sass", ".css") + m.group(2), contents)
-				contents = contents.replace("@component@(", 'iframe(style="style="width:100%; height:auto; border: none; margin: 0; padding: 0;", ')
+				contents = contents.format("@component@(", 'iframe(style="style="width:100%; height:auto;", ')
 				contents = re.sub(r'(["\']).*\.pyml.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".pyml", ".html") + m.group(2), contents)
 				with open(pymlpath, "w") as f:
 					f.write(contents)
