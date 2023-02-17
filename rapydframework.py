@@ -44,8 +44,7 @@ if args.init:
 	# Creates the presets
 	with open("src/app.pyml", "w") as f:
 		f.write(
-			"""
-html(lang="en"):
+			"""html(lang="en"):
 	head:
 		meta(charset="UTF-8")
 		meta(http-equiv="X-UA-Compatible", content="IE=edge")
@@ -58,15 +57,13 @@ html(lang="en"):
 	body:
 		p:
 			"Hello World"
-			"""
-		)
+""")
 	with open("src/styles/index.sass", "w") as f:
 		f.write(
-			"""
-body 
+			"""body 
 	color: black
 	background-color: white
-			"""
+"""
 		)
 
 	with open("src/scripts/main.pyj", "w") as f:
@@ -121,11 +118,9 @@ To test the generated Javascript, you can do that with eslint:
 
 	if args.tailwind:
 		with open("tailwind.config.js", "w") as t:
-			t.write("""
-    tailwind.config = {
+			t.write("""tailwind.config = {
 
-    }
-           """)
+}""")
 	print ("A new project was generated.")
 	# Terminates the initiation
 	sys.exit()
@@ -191,7 +186,7 @@ if args.compile:
 					contents = f.read()
 				contents = re.sub(r'(["\']).*\.pyj.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".pyj", ".js") + m.group(2), contents)
 				contents = re.sub(r'(["\']).*\.sass.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".sass", ".css") + m.group(2), contents)
-				contents = contents.replace("@component@(", 'iframe(class="resize-me", style="border: none; margin: 0; padding: 0;", ')
+				contents = contents.replace("rapydfw:nested(", 'iframe(class="resize-me", style="border: none; margin: 0; padding: 0;", ')
 				contents = re.sub(r'(["\']).*\.pyml.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".pyml", ".html") + m.group(2), contents)
 				with open(pymlpath, "w") as f:
 					f.write(contents)
@@ -202,7 +197,7 @@ if args.compile:
 			if file.endswith(".pyml"):
 				pymlpath = os.path.join(root, file).replace("\\", "/")
 				compilepath = os.path.abspath(pymlpath)
-				subprocess.run(["python", "C:/rapydframework/rapydml/rapydml.py", compilepath], env=os.environ)
+				subprocess.run(["python", "C:/rapydframework/rapydml/rapydml.py", "--rapydframework", compilepath], env=os.environ)
 				print("{} compiled to HTML".format(pymlpath.replace("temp/", "src/")))
 
 	# Compiles RapydScript files to JavaScript ones
@@ -241,6 +236,15 @@ if args.compile:
 							lol.write("{}".format(twconfig))
 							lol.write("\n")
 							lol.write("</script>")
+						with open(htmlpath, "r") as r:
+							content = r.read()
+						with open(htmlpath, "w") as w:
+							regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*>(?:.+?)</rapydfw:component>'
+							component = regex.group(1)
+							comppath = component.replace("/", "", 1)
+							with open(comppath, "r") as f:
+								comptext = f.read
+							content = re.sub(regex, comptext, content)
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
 
