@@ -241,8 +241,7 @@ if args.compile:
 						with open(htmlpath, "w") as w:
 							regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*>(?:.+?)</rapydfw:component>'
 							component = regex.group(1)
-							comppath = component.replace("/", "", 1)
-							with open(comppath, "r") as f:
+							with open(component, "r") as f:
 								comptext = f.read
 							content = re.sub(regex, comptext, content)
 					buildpath = htmlpath.replace("temp/", "build/")
