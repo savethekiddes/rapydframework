@@ -227,6 +227,8 @@ if args.compile:
 		for file in files:
 				if file.endswith(".html"):
 					htmlpath = os.path.join(root, file).replace("\\", "/")
+
+					# Tailwind support
 					if os.path.exists("tailwind.config.js"):
 						with open(htmlpath, "a") as lol:
 							lol.write('<script src="https://cdn.tailwindcss.com"></script>\n')
@@ -236,17 +238,23 @@ if args.compile:
 							lol.write("{}".format(twconfig))
 							lol.write("\n")
 							lol.write("</script>")
-						with open(htmlpath, "r") as r:
-							content = r.read()
-						regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*/>(?:.+?)'
-						match = re.search(regex, content)
-						if match:
-							component = match.group(1)
-							with open(component, "r") as f:
-								comptext = f.read()
-							content = re.sub(regex, comptext, content)
-						with open(htmlpath, "w") as w:
-							w.write(content.replace(regex, ""))
+					
+					# Jailbreaked componet support
+					with open(htmlpath, "r") as r:
+						content = r.read()
+					regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*/>(?:.+?)'
+					matches = re.findall(regex, content)
+
+					for match in matches:
+						with open(match, "r") as f:
+							comptext = f.read()
+						content = content.replace(f'<rapydfw:component src="{match}">', comptext)
+						content = re.sub(regex, '', content)
+
+					with open(htmlpath, "w") as w:
+						w.write(content.replace(regex, ""))
+
+					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
 
