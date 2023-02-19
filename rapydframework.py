@@ -238,7 +238,7 @@ if args.compile:
 							lol.write("</script>")
 						with open(htmlpath, "r") as r:
 							content = r.read()
-						regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*>(?:.+?)</rapydfw:component>'
+						regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*/>(?:.+?)'
 						match = re.search(regex, content)
 						if match:
 							component = match.group(1)
