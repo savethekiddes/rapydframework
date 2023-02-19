@@ -242,7 +242,7 @@ if args.compile:
 					# Jailbreaked componet support
 					with open(htmlpath, "r") as r:
 						content = r.read()
-					regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*/>(?:.+?)'
+					regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*>(?:.+?)?</rapydfw:component>'
 					matches = re.findall(regex, content)
 
 					for match in matches:
