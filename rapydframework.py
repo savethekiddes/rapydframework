@@ -252,7 +252,7 @@ if args.compile:
 						content = re.sub(regex, '', content)
 
 					with open(htmlpath, "w") as w:
-						w.write(content.replace(regex, ""))
+						w.write(content)
 
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
