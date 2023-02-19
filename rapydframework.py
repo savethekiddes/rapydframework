@@ -238,12 +238,15 @@ if args.compile:
 							lol.write("</script>")
 						with open(htmlpath, "r") as r:
 							content = r.read()
-						with open(htmlpath, "w") as w:
-							regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*>(?:.+?)</rapydfw:component>'
-							component = regex.group(1)
+						regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*>(?:.+?)</rapydfw:component>'
+						match = re.search(regex, content)
+						if match:
+							component = match.group(1)
 							with open(component, "r") as f:
-								comptext = f.read
+								comptext = f.read()
 							content = re.sub(regex, comptext, content)
+						with open(htmlpath, "w") as w:
+							w.write(content)
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
 
