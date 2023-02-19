@@ -246,7 +246,7 @@ if args.compile:
 								comptext = f.read()
 							content = re.sub(regex, comptext, content)
 						with open(htmlpath, "w") as w:
-							w.write(content)
+							w.write(content.replace(regex, ""))
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
 
