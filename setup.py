@@ -9,7 +9,7 @@ if not os.path.exists("C:/"):
     quit()
 
 # Install required Python modules
-required_modules = ["requests", "regex", "PyInstaller", "Flask"]
+required_modules = ["requests", "regex", "PyInstaller", "flask"]
 for item in required_modules:
     try:
         importlib.import_module(item)

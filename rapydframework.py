@@ -316,7 +316,7 @@ def get_template(folder):
 if __name__ == '__main__':
     app.run(debug=True, port="9999")""")
 	print("Starting a Flask development server...")
-	subprocess.run("python", "dev/devserver.py")
+	subprocess.run(["python", "dev/devserver.py"])
 	sys.exit()
 
 print("No argument submitted, please see -h or --help")
