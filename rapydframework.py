@@ -316,7 +316,7 @@ def serve_file(path=''):
 if __name__ == '__main__':
     app.run(debug=True, port="9999")""")
 	print("Starting a Flask development server...")
-	os.chdir('/dev')
+	os.chdir('dev')
 	subprocess.run(["python", "devserver.py"])
 	sys.exit()
 
