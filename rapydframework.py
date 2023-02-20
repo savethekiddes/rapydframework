@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser()
 action = parser.add_mutually_exclusive_group()
 action.add_argument("-i", "--init", action="store_true", help="creates a new project")
 action.add_argument("-c", "--compile", action="store_true", help="compiles a project")
+action.add_argument("-r", "--run", action="store_true", help="starts a Flask dev server")
 parser.add_argument("--tailwind", action="store_true", help="adds Tailwind support, to be used with the --init argument")
 parser.add_argument("-t", "--test", action="store_true", help="tests the code for errors, to be used with the --compile argument")
 args = parser.parse_args()
@@ -49,8 +50,8 @@ if args.init:
 		meta(charset="UTF-8")
 		meta(http-equiv="X-UA-Compatible", content="IE=edge")
 		meta(name="viewport", content="width=device-width, initial-scale=1.0")
-		link(rel="stylesheet", src="styles/index.sass")
-		script(src="scripts/main.pyj")
+		link(rel="stylesheet", src="/styles/index.sass")
+		script(src="/scripts/main.pyj")
 		title:
 			"Document"
 
@@ -274,6 +275,48 @@ if args.compile:
     # Deletes the temporary files
 	shutil.rmtree("temp/")
  
+	sys.exit()
+
+# Development server
+if args.run:
+	if not os.path.exists("build/"):
+		print("The project wasn't built first. Please run RapydFramework with the --compile option first!")
+		sys.exit()
+	if not os.path.exists("dev/"):
+		os.makedirs("dev/")
+	if not os.path.exists("dev/devserver.py"):
+		with open ("dev/devserver.py") as f:
+			f.write("""# Welcome to RapydFramework development server
+# This is just a simple Flask application, so feel free to tweek it as you would with an actual Flask app ;)
+# DO NOT USE THIS DEV SERVER IN PRODUCTION
+
+import os
+from flask import Flask, render_template, request, send_from_directory, abort
+
+buildfolder = "../build/" # Defines the directory from where the content should be served
+app = Flask(__name__, template_folder=buildfolder )
+
+@app.route("/")
+def get_root():
+    return render_template("app.html")
+
+@app.route('/<folder>')
+def get_template(folder):
+    template_path = os.path.join(folder, 'index.html')
+    file_path = buildfolder + folder
+    if os.path.exists(buildfolder + template_path):
+        return render_template(template_path.replace("\\", "/"))
+    elif os.path.exists(file_path):
+        return send_from_directory(buildfolder, folder)
+    else:
+        abort(404)
+
+
+# FROM THIS POINT YOU CAN'T SETUP ROUTES ANYMORE AND THE FLASK SERVER WILL NOT RESTART
+if __name__ == '__main__':
+    app.run(debug=True, port="9999")""")
+	print("Starting a Flask development server...")
+	subprocess.run("python", "dev/devserver.py")
 	sys.exit()
 
 print("No argument submitted, please see -h or --help")
