@@ -40,7 +40,7 @@ for item in required_modules:
         print("{} was installed.".format(item))
 
 # Install required Node modules
-node_modules = ["nw", "eslint"]
+node_modules = ["eslint"]
 for item in node_modules:
     try:
         result = subprocess.run(["where", item], capture_output=True, check=True, env=os.environ)
