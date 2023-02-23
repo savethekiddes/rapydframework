@@ -61,7 +61,7 @@ if args.init:
 	with open(template("gitignore"), "r") as f:
 		gitignore = f.read()
   
-	with open("src/app.pyml", "w"):
+	with open("src/app.pyml", "w") as f:
 		f.write(pyml)
 	with open("src/styles/index.sass", "w") as f:
 		f.write(sass)
@@ -71,8 +71,8 @@ if args.init:
 		f.write(eslint)
 	with open(".gitignore", "w") as f:
 		f.write(gitignore)
-	with open("README.md", "w") as m:
-		m.write(readme)
+	with open("README.md", "w") as f:
+		f.write(readme)
 
 	if args.tailwind:
 		with open(template("tailwind"), "r") as f:
