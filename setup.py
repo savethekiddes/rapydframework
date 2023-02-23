@@ -8,16 +8,6 @@ if not os.path.exists("C:/"):
     print("The installer and RapydFramework itself are made only for the Windows OS for now. Stay tuned for a Linux fork.")
     quit()
 
-# Install required Python modules
-required_modules = ["requests", "regex", "PyInstaller", "flask"]
-for item in required_modules:
-    try:
-        importlib.import_module(item)
-        print("{} is already installed.".format(item))
-    except ImportError:
-        subprocess.Popen(["pip", "install", item, "--user"])
-        print("{} was installed.".format(item))
-
 # Check if Node is installed
 try:
     result = subprocess.run(["where", "npm"], capture_output=True, check=True, env=os.environ)
@@ -38,14 +28,30 @@ try:
 except subprocess.CalledProcessError:
     print("GIT is not in PATH. Are you sure that is installed?")
     quit()
-    
+
+# Install required Python modules
+required_modules = ["requests", "regex", "PyInstaller", "flask"]
+for item in required_modules:
+    try:
+        importlib.import_module(item)
+        print("{} is already installed.".format(item))
+    except ImportError:
+        subprocess.Popen(["pip", "install", item, "--user"])
+        print("{} was installed.".format(item))
+
+# Install required Node modules
+node_modules = ["nw", "eslint"]
+for item in node_modules:
+    try:
+        result = subprocess.run(["where", item], capture_output=True, check=True, env=os.environ)
+        print("{} is already installed.".format(item))
+    except subprocess.CalledProcessError:
+        subprocess.Popen(["npm.cmd", "install", "-g", item,])
+        print("{} was installed.".format(item))
+
 # Install RapydScript-ng
 subprocess.run(["npm.cmd", "install", "-g", "rapydscript-ng"], env=os.environ)
 print("RapydScript-ng installed/updated.")
-
-# Install eslint
-subprocess.run(["npm.cmd", "install", "-g", "eslint"], env=os.environ)
-print("eslint installed/updated.")
 
 # Creates the global folder
 if not os.path.exists("C:/rapydframework"):
