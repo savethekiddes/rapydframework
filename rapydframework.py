@@ -61,7 +61,7 @@ if args.init:
 	with open(template("gitignore"), "r") as f:
 		gitignore = f.read()
   
-	with open("src/app.pyml" "w"):
+	with open("src/app.pyml", "w"):
 		f.write(pyml)
 	with open("src/styles/index.sass", "w") as f:
 		f.write(sass)
