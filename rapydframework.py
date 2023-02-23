@@ -43,85 +43,43 @@ if args.init:
 			sys.exit()
 
 	# Creates the presets
-	with open("src/app.pyml", "w") as f:
-		f.write(
-			"""html(lang="en"):
-	head:
-		meta(charset="UTF-8")
-		meta(http-equiv="X-UA-Compatible", content="IE=edge")
-		meta(name="viewport", content="width=device-width, initial-scale=1.0")
-		link(rel="stylesheet", src="/styles/index.sass")
-		script(src="/scripts/main.pyj")
-		title:
-			"Document"
-
-	body:
-		p:
-			"Hello World"
-""")
+	templates_path = "C:/rapydframework/src/templates/"
+	def template(path):
+		return templates_path + path + ".template"
+	with open(template("pyml"), "r") as f:
+		pyml = f.read()
+	with open(template("pyj"), "r") as f:
+		pyj = f.read()
+	with open(template("sass"), "r") as f:
+		sass = f.read()
+	with open(template("readme"), "r") as f:
+		readme = f.read()
+	with open(template("eslint"), "r") as f:
+		eslint = f.read()
+	with open(template("tailwind"), "r") as f:
+		tailwind = f.read()
+	with open(template("gitignore"), "r") as f:
+		gitignore = f.read()
+  
+	with open("src/app.pyml" "w"):
+		f.write(pyml)
 	with open("src/styles/index.sass", "w") as f:
-		f.write(
-			"""body 
-	color: black
-	background-color: white
-"""
-		)
-
+		f.write(sass)
 	with open("src/scripts/main.pyj", "w") as f:
-		f.write("")
-
+		f.write(pyj)
 	with open(".eslintrc.json", "w") as f:
-		f.write("""{
-	"env": {
-		"browser": true,
-		"es2021": true
-	},
-	"extends": "eslint:recommended",
-	"overrides": [
-	],
-	"parserOptions": {
-		"ecmaVersion": "latest",
-		"sourceType": "module"
-	},
-	"rules": {
-	}
-}""")
+		f.write(eslint)
 	with open(".gitignore", "w") as f:
-		f.write("""/build
-/temp
-.env
-.env.*
-!.env.example""")
+		f.write(gitignore)
 	with open("README.md", "w") as m:
-		m.write("""# RapydFramework
-
-Develop easily frontends without needing to learn other syntax but the Python one-
-
-## Create a project
-
-If you're seeing this, you probably already made this step. Congratulations.
-
-    C:/rapydframework/rapydframework.exe -i
-
-You might also consider to use Tailwind:
-
-    C:/rapydframework/rapydframework.exe -i --tailwind
-
-## Compile a project
-
-To compile a project to HTML, CSS, JavaScript and, eventualy, WASM, run the following command:
-
-    C:/rapydframework/rapydframework.exe -c
-
-To test the generated Javascript, you can do that with eslint:
-
-    C:/rapydframework/rapydframework.exe -c""")
+		m.write(readme)
 
 	if args.tailwind:
+		with open(template("tailwind"), "r") as f:
+			tailwind = f.read()
 		with open("tailwind.config.js", "w") as t:
-			t.write("""tailwind.config = {
+			t.write(tailwind)
 
-}""")
 	print ("A new project was generated.")
 	# Terminates the initiation
 	sys.exit()
@@ -285,39 +243,17 @@ if args.run:
 	if not os.path.exists("dev/"):
 		os.makedirs("dev/")
 	if not os.path.exists("dev/devserver.py"):
+		templates_path = "C:/rapydframework/src/templates/"
+		def template(path):
+			return templates_path + path + ".template"
+		with open(template("devserver"), "r") as f:
+			devserver = f.read()
 		with open ("dev/devserver.py", "w") as f:
-			f.write("""# Welcome to RapydFramework development server
-# This is just a simple Flask application, so feel free to tweek it as you would with an actual Flask app ;)
-# DO NOT USE THIS DEV SERVER IN PRODUCTION
-
-import os
-from flask import Flask, render_template, request, send_from_directory, abort
-
-buildfolder = "../build/" # Defines the directory from where the content should be served
-app = Flask(__name__, template_folder=buildfolder )
-
-@app.route("/")
-def get_root():
-    return render_template("app.html")
-
-@app.route('/<path:path>')
-def serve_file(path=''):
-    file_path = os.path.join('../build/', path)
-
-    if os.path.isfile(file_path):
-        return send_from_directory('../build/', path)
-    elif os.path.isdir(file_path):
-        index_path = os.path.join(file_path, 'index.html')
-        if os.path.isfile(index_path):
-            return send_from_directory(file_path, 'index.html')
-    abort(404)
-
-# FROM THIS POINT YOU CAN'T SETUP ROUTES ANYMORE AND THE FLASK SERVER WILL NOT RESTART
-if __name__ == '__main__':
-    app.run(debug=True, port="9999")""")
+			f.write(devserver)
 	print("Starting a Flask development server...")
 	os.chdir('dev')
 	subprocess.run(["python", "devserver.py"])
 	sys.exit()
+
 
 print("No argument submitted, please see -h or --help")
