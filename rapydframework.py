@@ -271,7 +271,7 @@ if args.compile:
 						env=os.environ)
 					print(result.stdout.decode())
 					print(result.stderr.decode(), file=sys.stderr)
-     
+    
     # Deletes the temporary files
 	shutil.rmtree("temp/")
  
@@ -285,7 +285,7 @@ if args.run:
 	if not os.path.exists("dev/"):
 		os.makedirs("dev/")
 	if not os.path.exists("dev/devserver.py"):
-		with open ("dev/devserver.py") as f:
+		with open ("dev/devserver.py", "w") as f:
 			f.write("""# Welcome to RapydFramework development server
 # This is just a simple Flask application, so feel free to tweek it as you would with an actual Flask app ;)
 # DO NOT USE THIS DEV SERVER IN PRODUCTION
