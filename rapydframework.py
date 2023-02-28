@@ -145,7 +145,6 @@ if args.compile:
 					contents = f.read()
 				contents = re.sub(r'(["\']).*\.pyj.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".pyj", ".js") + m.group(2), contents)
 				contents = re.sub(r'(["\']).*\.sass.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".sass", ".css") + m.group(2), contents)
-				contents = contents.replace("rapydfw:nested(", 'iframe(class="resize-me", style="border: none; margin: 0; padding: 0;", ')
 				contents = re.sub(r'(["\']).*\.pyml.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".pyml", ".html") + m.group(2), contents)
 				with open(pymlpath, "w") as f:
 					f.write(contents)
@@ -201,6 +200,8 @@ if args.compile:
 							lol.write("</script>")
 					
 					# Jailbreaked component support
+
+					# Standard component support
 					with open(htmlpath, "r") as r:
 						content = r.read()
 					with open(htmlpath, 'r') as f:
@@ -216,6 +217,24 @@ if args.compile:
 
 					with open(htmlpath, "w") as w:
 						w.write(content)
+
+					# Nested component support
+					with open(htmlpath, "r") as r:
+						content = r.read()
+					with open(htmlpath, 'r') as f:
+						lines = f.readlines()
+					regex = r'<rapydfw:nested\s+src="([^"]+)"?'
+					matches = re.findall(regex, content)
+
+					for match in matches:
+						with open("temp/" + match, "r") as f:
+							comptext = f.read()
+						content = content.replace(f'<rapydfw:nested src="{match}" />', "<iframe>" + comptext + "</iframe>")
+						content = re.sub(regex, '', content)
+
+					with open(htmlpath, "w") as w:
+						w.write(content)
+
 
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
