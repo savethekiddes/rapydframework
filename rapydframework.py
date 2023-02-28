@@ -181,6 +181,17 @@ if args.compile:
 				subprocess.Popen(["sass.exe", sasspath, csspath], env=os.environ)
 				print("{} compiled to CSS".format(sasspath))
 
+	# Adds PWA requirements
+	if not os.path.exists("build/scripts"):
+		os.makedirs("build/scripts")
+	templates_path = "C:/rapydframework/src/templates/"
+	def template(path):
+		return templates_path + path + ".template"
+	with open(template("service-worker"), "r") as f:
+		sw = f.read
+	with open("build/scripts/sw.js", "w") as f:
+		f.write(sw)
+
 	# Copies the html files to the build folder
 	for root, dirs, files in os.walk("temp/"):
 		for file in files:
@@ -198,9 +209,11 @@ if args.compile:
 							lol.write("\n")
 							lol.write("</script>")
 					
-					# Jailbreaked componet support
+					# Jailbreaked component support
 					with open(htmlpath, "r") as r:
 						content = r.read()
+					with open('filename.txt', 'r') as f:
+						lines = f.readlines()
 					regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*>(?:.+?)?</rapydfw:component>'
 					matches = re.findall(regex, content)
 
@@ -212,6 +225,12 @@ if args.compile:
 
 					with open(htmlpath, "w") as w:
 						w.write(content)
+
+					with open(htmlpath, 'w') as f:
+						for line in lines:
+							if line.strip().startswith('<rapydfw:component'):
+								continue  # skip this line
+							f.write(line)
 
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
