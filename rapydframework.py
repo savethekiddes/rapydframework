@@ -217,11 +217,7 @@ if args.compile:
 					with open(htmlpath, "w") as w:
 						w.write(content)
 
-					with open(htmlpath, 'w') as f:
-						for line in lines:
-							if line.strip().startswith('<rapydfw:component'):
-								continue  # skip this line
-							f.write(line)
+
 
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
