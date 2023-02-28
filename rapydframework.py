@@ -209,15 +209,13 @@ if args.compile:
 					matches = re.findall(regex, content)
 
 					for match in matches:
-						with open(match, "r") as f:
+						with open("temp/" + match, "r") as f:
 							comptext = f.read()
 						content = content.replace(f'<rapydfw:component src="{match}">', comptext)
 						content = re.sub(regex, '', content)
 
 					with open(htmlpath, "w") as w:
 						w.write(content)
-
-
 
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
