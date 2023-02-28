@@ -154,16 +154,7 @@ if args.compile:
 				with open(pymlpath, "w") as f:
 					f.write(contents)
 
-			if "+layout.pyml" == file:	
-				with open(file, "r") as f:
-					layout = f.read()
-					for files in os.walk(root):
-						if file.endswith(".pyml"):
-							with open(file, "r") as f:
-								content = f.read()
-							with open(file, "w") as f:
-								f.write("{}".format("{}".format(layout).replace("{{ page }}", content)))
-					
+
      
 	# Compiles Python Markdown to HTML
 	for root, dirs, files in os.walk("temp/"):
@@ -254,6 +245,17 @@ if args.compile:
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
+
+				if "+layout.html" == file:	
+					with open(os.path.join(root, file), "r") as f:
+						layout = f.read()
+					for files in os.walk(root):
+						if file.endswith(".html"):
+							with open(os.path.join(root, file), "r") as f:
+								content = f.read()
+							with open(os.path.join(root, file), "w") as f:
+								f.write("{}".format("{}".format(layout).replace("<**page** \>", content)))
+					
 
     # Tests the built javascript
 	if args.test:
