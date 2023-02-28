@@ -16,11 +16,16 @@ action.add_argument("-c", "--compile", action="store_true", help="compiles a pro
 action.add_argument("-r", "--run", action="store_true", help="starts a Flask dev server")
 parser.add_argument("--tailwind", action="store_true", help="adds Tailwind support, to be used with the --init argument")
 parser.add_argument("-t", "--test", action="store_true", help="tests the code for errors, to be used with the --compile argument")
+parser.add_argument("-d", "--debug", action="store_true", help="doesn't minify the build, to be used with the --compile argument")
 args = parser.parse_args()
 
 # Strikes down phantom arguments
 if not args.compile and args.test:
 	print("You can't use the --test argument without the --compile argument, please see -h or --help")
+	sys.exit()
+
+if not args.compile and args.debug:
+	print("You can't use the --debug argument without the --compile argument, please see -h or --help")
 	sys.exit()
 
 if not args.init and args.tailwind:
@@ -252,6 +257,14 @@ if args.compile:
 						env=os.environ)
 					print(result.stdout.decode())
 					print(result.stderr.decode(), file=sys.stderr)
+    
+    # Minifies the build
+	if not args.debug:
+		for root, dirs, files in os.walk("build/"):
+			for file in files:
+				if file.endswith(".css" or ".html" or ".js"):
+					minpath = os.path.join(root, file).replace("\\", "/")
+					subprocess.run(["minify.cmd", minpath, ">", minpath], env=os.environ)
     
     # Deletes the temporary files
 	shutil.rmtree("temp/")
