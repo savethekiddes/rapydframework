@@ -205,7 +205,7 @@ if args.compile:
 						content = r.read()
 					with open(htmlpath, 'r') as f:
 						lines = f.readlines()
-					regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*>(?:.+?)'
+					regex = r'<rapydfw:component\s+src="([^"]+)"?'
 					matches = re.findall(regex, content)
 
 					for match in matches:
