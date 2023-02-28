@@ -6,7 +6,7 @@ way to generate and compile projects that use RapydML, RapydScript and Sass (all
 inspired or heavily similar syntax to Python). That allows you to make cross-platform clients by just learning an
 easy language and little more.
 
-# Installation
+## Installation
 RapydFramework needs for these dependencies to be installed manually:
 - [Python](https://www.python.org/) (with pip)
 - [NodeJS](https://nodejs.org/)
@@ -20,7 +20,7 @@ in the command prompt:
 
     powershell -command "Invoke-WebRequest -UseBasicParsing https://raw.githubusercontent.com/savethekiddes/rapydframework/main/setup.py -OutFile setup.py; python setup.py"
 
-# About PATH
+## About PATH
 Some installers of Node.js don't add the "npm" folder to PATH. This is a problem, because then RapydScript-ng (the
 Python-like implementation of JavaScript) will not work. If rapydscript.py returns a FileNotFoundError when trying
 to compile RapydScript, then run this in a command prompt as administrator::
@@ -39,7 +39,7 @@ Instead of:
 
     C:/rapydframework/rapydframework.exe
 
-# Usage
+## Usage
 To get started, you can just type the following command:
 
     C:/rapydframework/rapydframework.exe -h
@@ -55,7 +55,7 @@ The output will be the following:
       -c, --compile  compiles a project
       -t, --test     tests the code for errors, to be used with the --compile argument
 
-# Credits
+## Credits
 The credits of course go to:
 - [atsepkov](https://github.com/atsepkov/), for making the original RapydML and RapydScript
 - [kovidgoyal](https://github.com/kovidgoyal/), for forking RapydScript and make it live again
