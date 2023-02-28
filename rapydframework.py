@@ -229,7 +229,7 @@ if args.compile:
 					for match in matches:
 						with open("temp/" + match, "r") as f:
 							comptext = f.read()
-						content = content.replace(f'<rapydfw:nested src="{match}" />', "<iframe>" + comptext + "</iframe>")
+						content = content.replace(f'<rapydfw:nested src="{match}" />', '<iframe style="border: none; margin: 0; padding: 0;" srcdoc="' + comptext + '"></iframe>')
 						content = re.sub(regex, '', content)
 
 					with open(htmlpath, "w") as w:
