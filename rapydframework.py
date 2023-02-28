@@ -181,16 +181,7 @@ if args.compile:
 				subprocess.Popen(["sass.exe", sasspath, csspath], env=os.environ)
 				print("{} compiled to CSS".format(sasspath))
 
-	# Adds PWA requirements
-	if not os.path.exists("build/scripts"):
-		os.makedirs("build/scripts")
-	templates_path = "C:/rapydframework/src/templates/"
-	def template(path):
-		return templates_path + path + ".template"
-	with open(template("service-worker"), "r") as f:
-		sw = f.read
-	with open("build/scripts/sw.js", "w") as f:
-		f.write(sw)
+
 
 	# Copies the html files to the build folder
 	for root, dirs, files in os.walk("temp/"):
