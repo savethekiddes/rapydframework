@@ -203,7 +203,7 @@ if args.compile:
 					# Jailbreaked component support
 					with open(htmlpath, "r") as r:
 						content = r.read()
-					with open('filename.txt', 'r') as f:
+					with open(htmlpath, 'r') as f:
 						lines = f.readlines()
 					regex = r'<rapydfw:component\s+src="([^"]+)"[^>]*>(?:.+?)?</rapydfw:component>'
 					matches = re.findall(regex, content)
