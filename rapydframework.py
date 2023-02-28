@@ -153,6 +153,17 @@ if args.compile:
 				contents = re.sub(r'(["\']).*\.pyml.*(\1)', lambda m: m.group(1) + m.group()[1:-1].replace(".pyml", ".html") + m.group(2), contents)
 				with open(pymlpath, "w") as f:
 					f.write(contents)
+
+			if "+layout.pyml" == file:	
+				with open(file, "r") as f:
+					layout = f.read()
+					for files in os.walk(root):
+						if file.endswith(".pyml"):
+							with open(file, "r") as f:
+								content = f.read()
+							with open(file, "w") as f:
+								f.write("{}".format("{}".format(layout).replace("{{ page }}", content)))
+					
      
 	# Compiles Python Markdown to HTML
 	for root, dirs, files in os.walk("temp/"):
@@ -240,7 +251,6 @@ if args.compile:
 					with open(htmlpath, "w") as w:
 						w.write(content)
 
-
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
@@ -257,7 +267,6 @@ if args.compile:
 						env=os.environ)
 					print(result.stdout.decode())
 					print(result.stderr.decode(), file=sys.stderr)
-
     
     # Deletes the temporary files
 	shutil.rmtree("temp/")
