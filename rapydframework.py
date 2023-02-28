@@ -264,7 +264,7 @@ if args.compile:
 			for file in files:
 				if file.endswith(".css" or ".html" or ".js"):
 					minpath = os.path.join(root, file).replace("\\", "/")
-					subprocess.run(["minify.cmd", minpath, ">", minpath], env=os.environ)
+					subprocess.run(["minify.cmd", os.path.abspath(minpath), ">", os.path.abspath(minpath)], env=os.environ)
     
     # Deletes the temporary files
 	shutil.rmtree("temp/")
