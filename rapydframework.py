@@ -254,7 +254,7 @@ if args.compile:
 							with open(os.path.join(root, file), "r") as f:
 								content = f.read()
 							with open(os.path.join(root, file), "w") as f:
-								f.write("{}".format("{}".format(layout).replace("<**page** \>", content)))
+								f.write("{}".format("{}".format(layout).replace("<//page// />", content)))
 					
 
     # Tests the built javascript
