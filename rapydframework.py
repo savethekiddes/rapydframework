@@ -211,7 +211,7 @@ if args.compile:
 					for match in matches:
 						with open("temp/" + match, "r") as f:
 							comptext = f.read()
-						content = content.replace(f'<rapydfw:component src="{match}">', comptext)
+						content = content.replace(f'<rapydfw:component src="{match}" />', comptext)
 						content = re.sub(regex, '', content)
 
 					with open(htmlpath, "w") as w:
