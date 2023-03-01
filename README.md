@@ -1,5 +1,6 @@
 **Disclaimer: this is still in beta, if not in alpha**
 
+![RapydFramework](https://bafybeie2xnifl63ivzqzkjbk5nc355frk3gg62xenrs6qi46wte62edopm.ipfs.w3s.link/Nuovo%20progetto.svg)
 # RapydFramework, the easy way for client development
 RapydFramework is an easy way to develop web apps using your Python skills. At his core, however, it's just a
 way to generate and compile projects that use RapydML, RapydScript and Sass (all technologies that have a heavily 
