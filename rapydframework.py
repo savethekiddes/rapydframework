@@ -272,16 +272,14 @@ if args.compile:
 					# Makes the app a PWA
 					if os.path.exists("app.json"):
 						with open(htmlpath, "a") as lol:
-							lol.write("""<script>"serviceWorker"in navigator&&window.addEventListener("load",function(){navigator.serviceWorker.register("/scripts/sw.js",{scope:"/"}).then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)},function(e){console.log("ServiceWorker registration failed: ",e)})});</script>\n""")       
+							lol.write("""<script>"serviceWorker"in navigator&&window.addEventListener("load",function(){navigator.serviceWorker.register("/sw.js",{scope:"/"}).then(function(e){console.log("ServiceWorker registration successful with scope: ",e.scope)},function(e){console.log("ServiceWorker registration failed: ",e)})});</script>\n""")       
 							shutil.copy2("app.json", "build/app.json")
-							if not os.path.exists("build/scripts/"):
-								os.makedirs("build/scripts/")
 							templates_path = "C:/rapydframework/src/templates/"
 							def template(path):
 								return templates_path + path + ".template"
 							with open(template("service-worker"), "r") as f:
 								sw = f.read()
-							with open("build/scripts/sw.js", "w") as f:
+							with open("build//sw.js", "w") as f:
 								f.write(sw)
 						with open(htmlpath, "r") as r:
 							content = r.read()
