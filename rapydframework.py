@@ -157,8 +157,6 @@ if args.compile:
 				with open(pymlpath, "w") as f:
 					f.write(contents)
 
-
-     
 	# Compiles Python Markdown to HTML
 	for root, dirs, files in os.walk("temp/"):
 		for file in files:
@@ -178,8 +176,8 @@ if args.compile:
 					f.write("")
 				subprocess.Popen(["rapydscript.cmd", pyjpath, "-o", jspath], env=os.environ)
 				print("{} compiled to JavaScript".format(pyjpath))
-    
-    # Bundles the generated JS with WebPack (yes, I'll migrate to something faster in the future)
+
+	# Bundles the generated JS with WebPack (yes, I'll migrate to something faster in the future)
 	for root, dirs, files in os.walk("build/"):
 		for file in files:
 			if file.endswith(".js"):
@@ -187,7 +185,20 @@ if args.compile:
 				jspath = "./" + abspath
 				bundlepath = "../" + abspath
 				subprocess.run(['webpack.cmd', '--entry', jspath, '--output-filename', bundlepath], stdout=subprocess.PIPE)
-				print("{} was bundled".format(jspath))
+				print("{} was bundled".format(abspath))
+    
+    # Tests the generated JavaScript
+	if args.test:
+		for root, dirs, files in os.walk("build/"):
+			for file in files:
+				if file.endswith(".js"):
+					testfile = os.path.join(root, file)
+					result = subprocess.run(["eslint.cmd", testfile, "-c", ".eslintrc.json"], 
+						stdout=subprocess.PIPE, 
+						stderr=subprocess.PIPE,
+						env=os.environ)
+					print(result.stdout.decode())
+					print(result.stderr.decode(), file=sys.stderr)
 
 
 	# Compiles Sass files to CSS ones
@@ -200,8 +211,6 @@ if args.compile:
 					f.write("")
 				subprocess.Popen(["sass.exe", sasspath, csspath], env=os.environ)
 				print("{} compiled to CSS".format(sasspath))
-
-
 
 	# Copies the html files to the build folder
 	for root, dirs, files in os.walk("temp/"):
@@ -256,26 +265,27 @@ if args.compile:
 					with open(htmlpath, "w") as w:
 						w.write(content)
 
+					# Makes the app a PWA
+					if os.path.exists("app.json"):
+						with open(htmlpath, "a") as lol:
+							lol.write('<link rel="manifest" href="/app.json">\n')
+							lol.write("""<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/scripts/sw.js');}</script>\n""")       
+							shutil.copy2("app.json", "build/app.json")
+							if not os.path.exists("scripts/"):
+								os.makedirs("scripts/")
+							templates_path = "C:/rapydframework/src/templates/"
+							def template(path):
+								return templates_path + path + ".template"
+							with open(template("service-worker"), "r") as f:
+								sw = f.read()
+							with open("build/scripts/sw.js"):
+								f.write(sw)
+
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
 
-					
-
-    # Tests the built javascript
-	if args.test:
-		for root, dirs, files in os.walk("build/"):
-			for file in files:
-				if file.endswith(".js"):
-					testfile = os.path.join(root, file)
-					result = subprocess.run(["eslint.cmd", testfile, "-c", ".eslintrc.json"], 
-						stdout=subprocess.PIPE, 
-						stderr=subprocess.PIPE,
-						env=os.environ)
-					print(result.stdout.decode())
-					print(result.stderr.decode(), file=sys.stderr)
-    
-    # Deletes the temporary files
+	# Deletes the temporary files
 	shutil.rmtree("temp/")
 	shutil.rmtree("dist/")
  
