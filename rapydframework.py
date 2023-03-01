@@ -86,7 +86,7 @@ if args.init:
 		with open("tailwind.config.js", "w") as t:
 			t.write(tailwind)
    
-	subprocess.run(["npm.cmd", "init", "-y"], env=os.environ)
+	subprocess.run(["npm.cmd", "init", "-y"], env=os.environ, stdout=subprocess.PIPE)
 
 	print ("A new project was generated.")
 	# Terminates the initiation
@@ -186,7 +186,7 @@ if args.compile:
 				abspath = os.path.join(root, file).replace("\\", "/")
 				jspath = "./" + abspath
 				bundlepath = "../" + abspath
-				subprocess.run(['webpack.cmd', '--entry', jspath, '--output-filename', bundlepath])
+				subprocess.run(['webpack.cmd', '--entry', jspath, '--output-filename', bundlepath], stdout=subprocess.PIPE)
 				print("{} was bundled".format(jspath))
 
 
