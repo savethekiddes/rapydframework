@@ -277,6 +277,7 @@ if args.compile:
     
     # Deletes the temporary files
 	shutil.rmtree("temp/")
+	shutil.rmtree("dist/")
  
 	sys.exit()
 
