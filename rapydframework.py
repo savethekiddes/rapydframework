@@ -86,7 +86,7 @@ if args.init:
 		with open("tailwind.config.js", "w") as t:
 			t.write(tailwind)
    
-	subprocess.run(["npm", "init", "-y"], env=os.environ)
+	subprocess.run(["npm.cmd", "init", "-y"], env=os.environ)
 
 	print ("A new project was generated.")
 	# Terminates the initiation
