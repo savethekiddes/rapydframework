@@ -66,6 +66,8 @@ if args.init:
 		tailwind = f.read()
 	with open(template("gitignore"), "r") as f:
 		gitignore = f.read()
+	with open(template("manifest"), "r") as f:
+		manifest = f.read()
   
 	with open("src/app.pyml", "w") as f:
 		f.write(pyml)
@@ -79,6 +81,9 @@ if args.init:
 		f.write(gitignore)
 	with open("README.md", "w") as f:
 		f.write(readme)
+	with open("app.json", "w") as f:
+		f.write(manifest)
+
 
 	if args.tailwind:
 		with open(template("tailwind"), "r") as f:
@@ -87,7 +92,6 @@ if args.init:
 			t.write(tailwind)
    
 	subprocess.run(["npm.cmd", "init", "-y"], env=os.environ, stdout=subprocess.PIPE)
-
 	print ("A new project was generated.")
 	# Terminates the initiation
 	sys.exit()
