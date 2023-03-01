@@ -272,7 +272,6 @@ if args.compile:
 					# Makes the app a PWA
 					if os.path.exists("app.json"):
 						with open(htmlpath, "a") as lol:
-							lol.write('<link rel="manifest" href="/app.json">\n')
 							lol.write("""<script>if('serviceWorker' in navigator){navigator.serviceWorker.register('/scripts/sw.js');}</script>\n""")       
 							shutil.copy2("app.json", "build/app.json")
 							if not os.path.exists("scripts/"):
@@ -284,7 +283,11 @@ if args.compile:
 								sw = f.read()
 							with open("build/scripts/sw.js", "w") as f:
 								f.write(sw)
-
+						with open(htmlpath, "r") as r:
+							content = r.read()
+						content = content.replace("</head>", '<link rel="manifest" href="/app.json" /></head>')
+						with open(htmlpath, "w") as f:
+							f.write(content)
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
