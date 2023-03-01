@@ -282,7 +282,7 @@ if args.compile:
 								return templates_path + path + ".template"
 							with open(template("service-worker"), "r") as f:
 								sw = f.read()
-							with open("build/scripts/sw.js", "w"):
+							with open("build/scripts/sw.js", "w") as f:
 								f.write(sw)
 
 					# Commit to build
