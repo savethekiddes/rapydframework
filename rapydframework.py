@@ -185,7 +185,8 @@ if args.compile:
 			if file.endswith(".js"):
 				abspath = os.path.join(root, file).replace("\\", "/")
 				jspath = "./" + abspath
-				subprocess.run(['webpack.cmd', '--entry', jspath, '--output-filename', jspath])
+				bundlepath = "../" + abspath
+				subprocess.run(['webpack.cmd', '--entry', jspath, '--output-filename', bundlepath])
 				print("{} was bundled".format(jspath))
 
 
