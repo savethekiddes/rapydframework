@@ -24,6 +24,7 @@ if not args.compile and args.test:
 	print("You can't use the --test argument without the --compile argument, please see -h or --help")
 	sys.exit()
 
+# NOTE: UNUSED FOR NOW
 if not args.compile and args.debug:
 	print("You can't use the --debug argument without the --compile argument, please see -h or --help")
 	sys.exit()
@@ -84,6 +85,8 @@ if args.init:
 			tailwind = f.read()
 		with open("tailwind.config.js", "w") as t:
 			t.write(tailwind)
+   
+	subprocess.run(["npm", "init", "-y"], env=os.environ)
 
 	print ("A new project was generated.")
 	# Terminates the initiation
@@ -175,6 +178,15 @@ if args.compile:
 					f.write("")
 				subprocess.Popen(["rapydscript.cmd", pyjpath, "-o", jspath], env=os.environ)
 				print("{} compiled to JavaScript".format(pyjpath))
+    
+    # Bundles the generated JS with WebPack (yes, I'll migrate to something faster in the future)
+	for root, dirs, files in os.walk("build/"):
+		for file in files:
+			if file.endswith(".js"):
+				jspath = os.path.join(root, file).replace("\\", "/")
+				subprocess.run(['webpack', '--entry', jspath, '--output-filename', jspath])
+				print("{} was bundled".format(jspath))
+
 
 	# Compiles Sass files to CSS ones
 	for root, dirs, files in os.walk("src/"):
@@ -246,15 +258,6 @@ if args.compile:
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
 
-				if "+layout.html" == file:	
-					with open(os.path.join(root, file), "r") as f:
-						layout = f.read()
-					for files in os.walk(root):
-						if file.endswith(".html"):
-							with open(os.path.join(root, file), "r") as f:
-								content = f.read()
-							with open(os.path.join(root, file), "w") as f:
-								f.write("{}".format("{}".format(layout).replace("<//page// />", content)))
 					
 
     # Tests the built javascript
