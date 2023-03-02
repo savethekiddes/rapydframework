@@ -285,21 +285,24 @@ if args.compile:
 							templates_path = "C:/rapydframework/src/templates/"
 							def template(path):
 								return templates_path + path + ".template"
-							with open(template("service-worker"), "r") as f:
-								sw = f.read()
-							with open("build/sw.js", "w") as f:
-								f.write(sw)
 						with open(htmlpath, "r") as r:
 							content = r.read()
 						content = content.replace("</head>", '<link rel="manifest" href="/app.json" /></head>')
 						with open(htmlpath, "w") as f:
 							f.write(content)
+						with open(template("apple"), "r") as f:
+							apple = f.read()
+						content = content.replace("</head>", apple)
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
 	
 	# Generates the PWA assets
 	if os.path.exists("app.json"):
+		with open(template("service-worker"), "r") as f:
+			sw = f.read()
+		with open("build/sw.js", "w") as f:
+			f.write(sw)
 		if not os.path.exists("build/assets/"):
 			os.makedirs("build/assets/")
 		shutil.copy2("icon.jpg", "build/assets/ççiconçç.jpg")
