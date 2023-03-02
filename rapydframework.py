@@ -304,7 +304,8 @@ if args.compile:
 			os.makedirs("build/assets/")
 		shutil.copy2("icon.jpg", "build/assets/ççiconçç.jpg")
 		os.chdir("build/assets/")
-		subprocess.run(["pwa-asset-generator.cmd", "ççiconçç.jpg"], env=os.environ)
+		subprocess.run(["pwa-asset-generator.cmd", "ççiconçç.jpg"], env=os.environ, stdout=subprocess.PIPE)
+		os.chdir("../../")
 		def template(path):
 			return templates_path + path + ".template"
 		with open(template("icon"), "r") as f:
