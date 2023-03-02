@@ -287,12 +287,13 @@ if args.compile:
 								return templates_path + path + ".template"
 						with open(htmlpath, "r") as r:
 							content = r.read()
-						content = content.replace("</head>", '<link rel="manifest" href="/app.json" /></head>')
-						with open(htmlpath, "w") as f:
-							f.write(content)
 						with open(template("apple"), "r") as f:
 							apple = f.read()
+						content = content.replace("</head>", '<link rel="manifest" href="/app.json" /></head>')
 						content = content.replace("</head>", apple)
+						with open(htmlpath, "w") as f:
+							f.write(content)
+						
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
