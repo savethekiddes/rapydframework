@@ -84,10 +84,7 @@ if args.init:
 	with open("app.json", "w") as f:
 		f.write(manifest)
 
-	with open("C:/rapydframework/src/templates/icon.jpg", "r") as r:
-		icon = r.read()
-	with open("icon.jpg", "w") as f:
-		f.write(icon)
+	shutil.copy2("C:/rapydframework/src/templates/icon.jpg", "icon.jpg")
 
 	if args.tailwind:
 		with open(template("tailwind"), "r") as f:
