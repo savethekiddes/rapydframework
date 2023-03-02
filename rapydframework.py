@@ -84,7 +84,7 @@ if args.init:
 	with open("app.json", "w") as f:
 		f.write(manifest)
 
-	with open("C:/rapydframework/src/templates/icon.png", "r") as r:
+	with open("C:/rapydframework/src/templates/icon.jpg", "r") as r:
 		icon = r.read()
 	with open("icon.jpg", "w") as f:
 		f.write(icon)
