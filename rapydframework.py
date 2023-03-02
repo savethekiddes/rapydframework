@@ -5,6 +5,7 @@ import subprocess
 import shutil
 import sys
 import re
+import json
 
 print("RapydFramework, the easy way for client development")
 
@@ -289,8 +290,15 @@ if args.compile:
 							content = r.read()
 						with open(template("apple"), "r") as f:
 							apple = f.read()
+						with open('app.json') as f:
+							data = json.load(f)
+						theme_color_value = data['theme_color']
+						description_value = data['description']
 						content = content.replace("</head>", '<link rel="manifest" href="/app.json" /></head>')
 						content = content.replace("</head>", apple)
+						content = content.replace("</head>", '<meta name="theme-color" content={}/></head>'.format(theme_color_value))
+						content = content.replace("</head>", '<meta name="description" content={}></head>'.format(description_value))
+						content = content.replace("</head>", '<meta charset="UTF-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /></head>')
 						with open(htmlpath, "w") as f:
 							f.write(content)
 						
@@ -308,7 +316,7 @@ if args.compile:
 			os.makedirs("build/assets/")
 		shutil.copy2("icon.jpg", "build/assets/ççiconçç.jpg")
 		os.chdir("build/assets/")
-		subprocess.run(["pwa-asset-generator.cmd", "ççiconçç.jpg"], env=os.environ, stdout=subprocess.PIPE)
+		subprocess.run(["pwa-asset-generator.cmd", "ççiconçç.jpg"], env=os.environ, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
 		os.chdir("../../")
 		def template(path):
 			return templates_path + path + ".template"
