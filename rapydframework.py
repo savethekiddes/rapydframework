@@ -104,8 +104,13 @@ if args.compile:
 	# Makes the build tree
 	if not os.path.exists("icon.jpg"):
 		print("""The "icon.jpg" file wasn't found. Are you sure this is a RapydFramework project?""")
+		sys.exit()
 	if not os.path.exists("src/"):
 		print("""The "src/" folder wasn't found. Are you sure this is a RapydFramework project?""")
+		sys.exit()
+
+	if not os.path.exists("build/"):
+		os.makedirs("build/")
 	else:
 		shutil.rmtree("build/")
 		os.makedirs("build/")
