@@ -84,6 +84,10 @@ if args.init:
 	with open("app.json", "w") as f:
 		f.write(manifest)
 
+	with open("C:/rapydframework/src/templates/icon.png", "r") as r:
+		icon = r.read()
+	with open("icon.jpg", "w") as f:
+		f.write(icon)
 
 	if args.tailwind:
 		with open(template("tailwind"), "r") as f:
@@ -101,8 +105,10 @@ if args.init:
 if args.compile:
 
 	# Makes the build tree
-	if not os.path.exists("build/"):
-		os.makedirs("build/")
+	if not os.path.exists("icon.jpg"):
+		print("""The "icon.jpg" file wasn't found. Are you sure this is a RapydFramework project?""")
+	if not os.path.exists("src/"):
+		print("""The "src/" folder wasn't found. Are you sure this is a RapydFramework project?""")
 	else:
 		shutil.rmtree("build/")
 		os.makedirs("build/")
@@ -279,7 +285,7 @@ if args.compile:
 								return templates_path + path + ".template"
 							with open(template("service-worker"), "r") as f:
 								sw = f.read()
-							with open("build//sw.js", "w") as f:
+							with open("build/sw.js", "w") as f:
 								f.write(sw)
 						with open(htmlpath, "r") as r:
 							content = r.read()
@@ -289,6 +295,21 @@ if args.compile:
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
+	
+	# Generates the PWA assets
+	if os.path.exists("app.json"):
+		if not os.path.exists("build/assets/"):
+			os.makedirs("build/assets/")
+		shutil.copy2("icon.jpg", "build/assets/ççiconçç.jpg")
+		os.chdir("build/assets/")
+		subprocess.run(["pwa-asset-generator.cmd", "ççiconçç.jpg"], env=os.envrion)
+		def template(path):
+			return templates_path + path + ".template"
+		with open(template("icon"), "r") as f:
+			icon = f.read()
+		with open("app.json", "a") as a:
+			a.write(icon)
+		os.remove("build/assets/ççiconçç.jpg")
 
 	# Deletes the temporary files
 	shutil.rmtree("temp/")
