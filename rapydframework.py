@@ -314,8 +314,11 @@ if args.compile:
 			return templates_path + path + ".template"
 		with open(template("icon"), "r") as f:
 			icon = f.read()
-		with open("app.json", "a") as a:
-			a.write(icon)
+		with open("build/app.json", "r") as r:
+			manifest =  r.read()
+		manifest = manifest.replace("}", icon)
+		with open("build/app.json", "w") as a:
+			a.write(manifest)
 		os.remove("build/assets/ççiconçç.jpg")
 
 	# Deletes the temporary files
