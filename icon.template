@@ -1,4 +1,4 @@
-,"icons": [
+"icons": [
   {
     "src": "/assets/manifest-icon-192.maskable.png",
     "sizes": "192x192",
@@ -24,4 +24,3 @@
     "purpose": "maskable"
   }
 ]
-}
