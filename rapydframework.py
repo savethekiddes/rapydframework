@@ -350,6 +350,10 @@ if args.compile:
 	# Deletes the temporary files
 	shutil.rmtree("temp/")
 	shutil.rmtree("dist/")
+	for root, dirs, files in os.walk("build/"):
+		for file in files:
+			if file == "@layout.html":
+				os.remove(os.path.join(root, file))
  
 	sys.exit()
 
