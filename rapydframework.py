@@ -278,6 +278,7 @@ if args.compile:
 					with open(htmlpath, "w") as w:
 						w.write(content)
 
+						
 					# Makes the app a PWA
 					if os.path.exists("app.json"):
 						with open(htmlpath, "a") as lol:
@@ -296,16 +297,30 @@ if args.compile:
 						description_value = data['description']
 						content = content.replace("</head>", '<link rel="manifest" href="/app.json" /></head>')
 						content = content.replace("</head>", apple)
-						content = content.replace("</head>", '<meta name="theme-color" content={}/></head>'.format(theme_color_value))
-						content = content.replace("</head>", '<meta name="description" content={}></head>'.format(description_value))
+						content = content.replace("</head>", '<meta name="theme-color" content="{}"/></head>'.format(theme_color_value))
+						content = content.replace("</head>", '<meta name="description" content="{}"></head>'.format(description_value))
 						content = content.replace("</head>", '<meta charset="UTF-8" /><meta http-equiv="X-UA-Compatible" content="IE=edge" /><meta name="viewport" content="width=device-width, initial-scale=1.0" /></head>')
 						with open(htmlpath, "w") as f:
 							f.write(content)
-						
+
+					# Layout path
+					if file == "@layout.html":
+						layoutpath = os.path.join(root, file).replace("\\", "/")
+						with open(layoutpath, "r") as r:
+							layout = r.read
+						for root, dirs, files in os.walk(root):
+							for file in files:
+								if file.endswith(".html"):
+									contentpath = os.path.join(root, file).replace("\\", "/")
+									with open(contentpath, "r") as r:
+										content = r.read
+									content = layout.replace("<layout />", content)
+
+	
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
-	
+
 	# Generates the PWA assets
 	if os.path.exists("app.json"):
 		with open(template("service-worker"), "r") as f:
