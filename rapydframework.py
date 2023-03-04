@@ -307,13 +307,13 @@ if args.compile:
 					if file == "@layout.html":
 						layoutpath = os.path.join(root, file).replace("\\", "/")
 						with open(layoutpath, "r") as r:
-							layout = r.read
+							layout = r.read()
 						for root, dirs, files in os.walk(root):
 							for file in files:
 								if file.endswith(".html"):
 									contentpath = os.path.join(root, file).replace("\\", "/")
 									with open(contentpath, "r") as r:
-										content = r.read
+										content = r.read()
 									content = layout.replace("<layout />", content)
 
 	
