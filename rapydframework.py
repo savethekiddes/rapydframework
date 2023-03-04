@@ -317,6 +317,7 @@ if args.compile:
 					# Commit to build
 					buildpath = htmlpath.replace("temp/", "build/")
 					shutil.copy2(htmlpath, buildpath)
+					print("{} was bundled.".format(buildpath))
 
 	# Generates the PWA assets
 	if os.path.exists("app.json"):
@@ -340,6 +341,7 @@ if args.compile:
 		with open("build/app.json", "w") as a:
 			a.write(manifest)
 		os.remove("build/assets/ççiconçç.jpg")
+		print("The PWA-related assets were generated.")
 
 	# Deletes the temporary files
 	shutil.rmtree("temp/")
