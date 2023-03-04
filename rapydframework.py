@@ -303,7 +303,18 @@ if args.compile:
 						with open(htmlpath, "w") as f:
 							f.write(content)
 
-
+					# Layout path
+					if file == "@layout.html":
+						layoutpath = os.path.join(root, file).replace("\\", "/")
+						with open(layoutpath, "r") as r:
+							layoutcont = r.read()
+						for rt, drs, fls in os.walk(os.path.basename(root)):
+							for fl in fls:
+								if fl.endswith(".html"):
+									contentpath = os.path.join(rt, fl).replace("\\", "/")
+									with open(contentpath, "r") as r:
+										contentt = r.read()
+									contentlay = layoutcont.replace("<layout />", contentt)
 
 	
 					# Commit to build
