@@ -1,6 +1,6 @@
 html(lang="en"):
 	head:
-		link(rel="stylesheet", src="/styles/index.sass")
+		link(rel="stylesheet", href="/styles/index.sass")
 		script(src="/scripts/main.pyj")
 		title:
 			"Document"
