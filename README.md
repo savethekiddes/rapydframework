@@ -48,12 +48,14 @@ To get started, you can just type the following command:
 The output will be the following:
 
     RapydFramework, the easy way for client development
-    usage: rapydframework [-h] [-i | -c] [-t]
-
+    usage: RapydFramework.exe [-h] [-i | -c | -r] [--tailwind] [-t]
+    
     options:
       -h, --help     show this help message and exit
       -i, --init     creates a new project
       -c, --compile  compiles a project
+      -r, --run      starts a Flask dev server
+      --tailwind     adds Tailwind support, to be used with the --init argument
       -t, --test     tests the code for errors, to be used with the --compile argument
 
 ## Credits
